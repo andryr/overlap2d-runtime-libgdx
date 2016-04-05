@@ -26,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.data.MainItemVO;
+import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
@@ -68,7 +69,6 @@ public abstract class ComponentFactory {
         createZIndexComponent(entity, vo);
         createScriptComponent(entity, vo);
         createMeshComponent(entity, vo);
-        createPhysicsComponents(entity, vo);
         createShaderComponent(entity, vo);
     }
 
@@ -171,8 +171,14 @@ public abstract class ComponentFactory {
         if(vo.physics == null){
             return;
         }
+        PolygonComponent polygonComponent = ComponentRetriever.get(entity, PolygonComponent.class);
+        TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
 
-        createPhysicsBodyPropertiesComponent(entity, vo);
+
+        PhysicsBodyComponent component = createPhysicsBodyPropertiesComponent(entity, vo);
+        component.body = PhysicsBodyLoader.getInstance().createBody(world, component, polygonComponent.vertices, transformComponent);
+        entity.add(component);
+
     }
 
     protected PhysicsBodyComponent createPhysicsBodyPropertiesComponent(Entity entity, MainItemVO vo) {
@@ -191,7 +197,6 @@ public abstract class ComponentFactory {
         component.restitution = vo.physics.restitution;
         component.rotationalInertia = vo.physics.rotationalInertia;
 
-        entity.add(component);
 
         return component;
     }

@@ -50,6 +50,7 @@ public class SimpleImageComponentFactory extends ComponentFactory {
         createParentNodeComponent(root, entity);
         createNodeComponent(root, entity);
         updatePolygons(entity);
+        createPhysicsComponents(entity, vo);
     }
 
     private void updatePolygons(Entity entity) {

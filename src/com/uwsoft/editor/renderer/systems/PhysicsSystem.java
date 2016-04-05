@@ -49,8 +49,8 @@ public class PhysicsSystem extends IteratingSystem {
 
 		PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
 		Body body = physicsBodyComponent.body;
-		transformComponent.x = body.getPosition().x / PhysicsBodyLoader.getScale() - transformComponent.originX;
-		transformComponent.y = body.getPosition().y / PhysicsBodyLoader.getScale() - transformComponent.originY;
+		transformComponent.x = body.getPosition().x / PhysicsBodyLoader.getScale()/* - transformComponent.originX*2*/;
+		transformComponent.y = body.getPosition().y / PhysicsBodyLoader.getScale()/* - transformComponent.originY*2*/;
 		transformComponent.rotation = body.getAngle() * MathUtils.radiansToDegrees;
 	}
 
@@ -64,16 +64,18 @@ public class PhysicsSystem extends IteratingSystem {
 			physicsBodyComponent.body = null;
 		}
 
-		if(physicsBodyComponent.body == null && polygonComponent != null) {
+		if(polygonComponent != null) {
 			if(polygonComponent.vertices == null) return;
+
 
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-            physicsBodyComponent.centerX = dimensionsComponent.width/2;
-            physicsBodyComponent.centerY = dimensionsComponent.height/2;
 
-			PhysicsBodyComponent bodyPropertiesComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-			physicsBodyComponent.body = PhysicsBodyLoader.getInstance().createBody(world, bodyPropertiesComponent, polygonComponent.vertices, transformComponent);
+            //physicsBodyComponent.centerX = dimensionsComponent.width/2;
+            //physicsBodyComponent.centerY = dimensionsComponent.height/2;
+
+			//PhysicsBodyComponent bodyPropertiesComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+			//physicsBodyComponent.body = PhysicsBodyLoader.getInstance().createBody(world, bodyPropertiesComponent, polygonComponent.vertices, transformComponent);
 
 			physicsBodyComponent.body.setUserData(entity);
 		}

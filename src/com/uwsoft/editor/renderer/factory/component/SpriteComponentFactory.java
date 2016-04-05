@@ -56,6 +56,7 @@ public class SpriteComponentFactory extends ComponentFactory {
         createParentNodeComponent(root, entity);
         createNodeComponent(root, entity);
         createSpriteAnimationDataComponent(entity, (SpriteAnimationVO) vo);
+        createPhysicsComponents(entity, vo);
     }
 
     @Override

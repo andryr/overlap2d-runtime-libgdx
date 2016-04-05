@@ -30,6 +30,7 @@ public class NinePatchComponentFactory extends ComponentFactory {
 		createCommonComponents(entity, vo, EntityFactory.NINE_PATCH);
 		createParentNodeComponent(root, entity);
 		createNodeComponent(root, entity);
+		createPhysicsComponents(entity, vo);
 	}
 
 	@Override

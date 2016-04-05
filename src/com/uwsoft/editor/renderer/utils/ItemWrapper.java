@@ -20,6 +20,7 @@ package com.uwsoft.editor.renderer.utils;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.ParentNodeComponent;
@@ -44,11 +45,13 @@ public class ItemWrapper {
 
     public ItemWrapper(Entity entity) {
         this.entity = entity;
+
         nodeComponent = ComponentRetriever.get(entity, NodeComponent.class);
         if(nodeComponent != null) {
             for (Entity child : nodeComponent.children) {
                 MainItemComponent mainItemComponent = ComponentRetriever.get(child, MainItemComponent.class);
                 childMap.put(mainItemComponent.itemIdentifier, child);
+                Gdx.app.log("ItemWrapper", mainItemComponent.itemIdentifier);
             }
         }
     }
